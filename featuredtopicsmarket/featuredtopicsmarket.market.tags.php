@@ -93,39 +93,39 @@ $extTplFile = cot_tplfile(
 // во избежание перезаписи $mskin, если наш шаблон это строка внутри другого шаблона со своим $m (mode)
 $tt = new XTemplate($extTplFile);
 
-foreach ($recommended_topics as $item) {
-    $item_id = (int)$item['id'];
+foreach ($recommended_topics as $topic) {
+    $topic_id = (int)$topic['id'];
 	//устанавливаем булеевый флаг
 	// его используем в условии 
 	// <!-- IF {PHP|cot_plugin_active('featuredtopicsmarket')} AND {RECOMMENDED_FR_TOPIC_MARKET_TOPICS_TRUE} -->
 	// для того чтобы не грузить шаблон с версткой, но без данных
     $t->assign('RECOMMENDED_FR_TOPIC_MARKET_TOPICS_TRUE', true);
     // 
-    $url = cot_url('forums', "m=posts&q={$item_id}");
-    $desc = !empty($item['ft_desc'])
-        ? cot_string_truncate(strip_tags($item['ft_desc']), $desc_len, true, false)
-        : cot_string_truncate(strip_tags($item['ft_preview'] ?? ''), $desc_len, true, false);
-    $cat_code = $item['ft_cat'] ?? '';
+    $url = cot_url('forums', "m=posts&q={$topic_id}");
+    $desc = !empty($topic['ft_desc'])
+        ? cot_string_truncate(strip_tags($topic['ft_desc']), $desc_len, true, false)
+        : cot_string_truncate(strip_tags($topic['ft_preview'] ?? ''), $desc_len, true, false);
+    $cat_code = $topic['ft_cat'] ?? '';
     $cat_title = '';
     if (!empty($cat_code)) {
         $cat_title = !empty($structure['forums'][$cat_code]['title'])
             ? htmlspecialchars($structure['forums'][$cat_code]['title'], ENT_QUOTES, 'UTF-8')
             : htmlspecialchars($cat_code, ENT_QUOTES, 'UTF-8');
     }
-    $main_image = get_recommended_forum_topic_main_first_image($item_id);
+    $main_image = get_recommended_forum_topic_main_first_image($topic_id);
     $tt->assign([
-        'RECOMMENDED_FR_TOPIC_MARKET_ROW_ID' => $item_id,	
+        'RECOMMENDED_FR_TOPIC_MARKET_ROW_ID' => $topic_id,	
         'RECOMMENDED_FR_TOPIC_MARKET_ROW_URL' => htmlspecialchars($url, ENT_QUOTES, 'UTF-8'),
-        'RECOMMENDED_FR_TOPIC_MARKET_ROW_TITLE' => htmlspecialchars($item['ft_title'] ?? '', ENT_QUOTES, 'UTF-8'),
+        'RECOMMENDED_FR_TOPIC_MARKET_ROW_TITLE' => htmlspecialchars($topic['ft_title'] ?? '', ENT_QUOTES, 'UTF-8'),
         'RECOMMENDED_FR_TOPIC_MARKET_ROW_DESC' => htmlspecialchars($desc, ENT_QUOTES, 'UTF-8'),
-        'RECOMMENDED_FR_TOPIC_MARKET_ROW_PREVIEW' => htmlspecialchars(cot_string_truncate(strip_tags($item['ft_preview'] ?? ''), $desc_len), ENT_QUOTES, 'UTF-8'),
+        'RECOMMENDED_FR_TOPIC_MARKET_ROW_PREVIEW' => htmlspecialchars(cot_string_truncate(strip_tags($topic['ft_preview'] ?? ''), $desc_len), ENT_QUOTES, 'UTF-8'),
         'RECOMMENDED_FR_TOPIC_MARKET_ROW_CAT_TITLE' => $cat_title,
         'RECOMMENDED_FR_TOPIC_MARKET_ROW_CAT_URL' => cot_url('forums', ['m' => 'topics', 's' => $cat_code]),
         'RECOMMENDED_FR_TOPIC_MARKET_ROW_LINK_MAIN_IMAGE' => htmlspecialchars($main_image, ENT_QUOTES, 'UTF-8'),
-        'RECOMMENDED_FR_TOPIC_MARKET_ROW_POSTCOUNT' => $item['ft_postcount'],
-        'RECOMMENDED_FR_TOPIC_MARKET_ROW_VIEWCOUNT' => $item['ft_viewcount'],
-        'RECOMMENDED_FR_TOPIC_MARKET_ROW_LASTPOSTERNAME' => htmlspecialchars($item['ft_lastpostername'], ENT_QUOTES, 'UTF-8'),
-        'RECOMMENDED_FR_TOPIC_MARKET_ROW_UPDATED' => $item['ft_updated']
+        'RECOMMENDED_FR_TOPIC_MARKET_ROW_POSTCOUNT' => $topic['ft_postcount'],
+        'RECOMMENDED_FR_TOPIC_MARKET_ROW_VIEWCOUNT' => $topic['ft_viewcount'],
+        'RECOMMENDED_FR_TOPIC_MARKET_ROW_LASTPOSTERNAME' => htmlspecialchars($topic['ft_lastpostername'], ENT_QUOTES, 'UTF-8'),
+        'RECOMMENDED_FR_TOPIC_MARKET_ROW_UPDATED' => $topic['ft_updated']
     ]);
 	// Парсим одну строку в цикле и отдаем 
 	//в MAIN цикла - (BEGIN: RECOMMENDED_FR_TOPIC_MARKET_ROW и END: RECOMMENDED_FR_TOPIC_MARKET_ROW) 
@@ -138,3 +138,4 @@ $tt->parse('MAIN');
 // в тег {RECOMMENDED_FR_TOPIC_MARKET_TOPICS} 
 // для родительского шаблона market.tpl
 $t->assign('RECOMMENDED_FR_TOPIC_MARKET_TOPICS', $tt->text('MAIN'));
+unset($topic);
