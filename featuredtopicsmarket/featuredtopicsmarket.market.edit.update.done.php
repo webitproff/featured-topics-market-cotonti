@@ -19,6 +19,7 @@
  */
 defined('COT_CODE') or die('Wrong URL');
 global $db, $db_forum_topics, $db_x, $cfg, $id;
+require_once cot_incfile('featuredtopicsmarket', 'plug'); 
 $product_id = (int)$id;
 if ($product_id <= 0) {
     return;
