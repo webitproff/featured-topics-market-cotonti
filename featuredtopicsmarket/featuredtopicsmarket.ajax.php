@@ -18,6 +18,8 @@
  * @license BSD
  */
 defined('COT_CODE') or die('Wrong URL');
+require_once cot_incfile('featuredtopicsmarket', 'plug'); 
+
 header('Content-Type: application/json; charset=UTF-8');
 $qq = cot_import('qq', 'G', 'TXT');
 $qq = trim($qq);
