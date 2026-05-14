@@ -5,17 +5,21 @@
  * Purpose: functions for the plugin featuredtopicsmarket
  * Notes: File for the Plugin Recommended Forum Topics in Market Item
  * Filename: featuredtopicsmarket.functions.php
+ * Date: May 14Th, 2026
  * @package featuredtopicsmarket
- * @version 2.7.7
- * @copyright (c) webitproff 2026 https://github.com/webitproff or https://abuyfile.com/users/webitproff
+ * @version 2.7.8
+ * @author webitproff
+ * @copyright Copyright (c) webitproff 2026 | https://github.com/webitproff
  * @license BSD
  */
 
 
 defined('COT_CODE') or die('Wrong URL');
+require_once cot_langfile('featuredtopicsmarket', 'plug');
 // нужно было всего-то прописать строку 
 require_once cot_incfile('forums', 'module'); 
 
+Cot::$db->registerTable('featured_topics_market');
 //обратить внимание, что бы по другим файлам, где это нужно было прописана строка
 // require_once cot_incfile('featuredtopicsmarket', 'plug'); 
 
