@@ -69,8 +69,8 @@ function get_recommended_forum_topic_main_first_image(int $topic_id): string
     if ($topic_id <= 0) {
         return $cfg['mainurl'] . '/plugins/featuredtopicsmarket/img/image.webp';
     }
-    $default_image = !empty($cfg['plugin']['featuredtopicsmarket']['nonimage'])
-		? rtrim($cfg['mainurl'], '/') . '/' . ltrim($cfg['plugin']['featuredtopicsmarket']['nonimage'], '/')
+    $default_image = !empty($cfg['plugin']['featuredtopicsmarket']['nonimage_market_rft'])
+		? rtrim($cfg['mainurl'], '/') . '/' . ltrim($cfg['plugin']['featuredtopicsmarket']['nonimage_market_rft'], '/')
 		: rtrim($cfg['mainurl'], '/') . '/plugins/featuredtopicsmarket/img/image.webp';
 		
     // Находим первый пост темы
